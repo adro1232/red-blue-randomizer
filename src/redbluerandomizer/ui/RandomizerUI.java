@@ -129,7 +129,7 @@ public class RandomizerUI {
 		frmRedblueRandomizer.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		introCheckBox = new JCheckBox("Intro Pokemon");
+		introCheckBox = new JCheckBox("Title Screen Pokemon");
 		panel.add(introCheckBox);
 		
 		rivalStarterCheckBox = new JCheckBox("Rival Starter Pokemon");
@@ -162,20 +162,29 @@ public class RandomizerUI {
 				try{
 					JFileChooser chooser = new JFileChooser();
 					chooser.setCurrentDirectory(new File(inputFileDirectory));
+					chooser.setFileFilter(new GameboyFileFilter());
 					chooser.showSaveDialog(null);				
 					File outputFile = chooser.getSelectedFile();
-					
-					//set options
-					randomizer.setIntroToggle(introCheckBox.isSelected());
-					randomizer.setStartersToggle(rivalStarterCheckBox.isSelected());
-					randomizer.setwildAreasToggle(wildCheckBox.isSelected());
-					randomizer.setTrainersToggle(trainerCheckBox.isSelected());
-					randomizer.setOneToOneToggle(oneToOneReplacement.isSelected());
-					
-					//randomize and save
-					randomizer.randomize();
-					randomizer.saveRom(outputFile.getAbsolutePath());
-					JOptionPane.showMessageDialog(null, "ROM has been randomized! :D");
+					if(outputFile != null){
+						//set options
+						randomizer.setIntroToggle(introCheckBox.isSelected());
+						randomizer.setStartersToggle(rivalStarterCheckBox.isSelected());
+						randomizer.setwildAreasToggle(wildCheckBox.isSelected());
+						randomizer.setTrainersToggle(trainerCheckBox.isSelected());
+						randomizer.setOneToOneToggle(oneToOneReplacement.isSelected());
+						
+						//randomize and save
+						randomizer.randomize();
+						String outputFilePath = outputFile.getAbsolutePath();
+						if(!outputFilePath.matches(".*\\.gb")){
+							outputFilePath += ".gb";
+						}
+						randomizer.saveRom(outputFilePath);
+						JOptionPane.showMessageDialog(null, "ROM has been randomized! :D");
+					}
+					else{
+						return;
+					}					
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(null, "An error occurred during randomization. Please check your rom and try again.");
