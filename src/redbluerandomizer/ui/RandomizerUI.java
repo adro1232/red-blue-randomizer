@@ -43,6 +43,7 @@ public class RandomizerUI {
 	private JCheckBox rivalStarterCheckBox;	
 	private JCheckBox wildCheckBox;	
 	private JCheckBox trainerCheckBox;
+	private JCheckBox gymLeaderCheckBox;
 	private JButton randomizeButton;
 	private JRadioButton totallyRandom;
 	private JRadioButton oneToOneReplacement;
@@ -51,7 +52,7 @@ public class RandomizerUI {
 	private RedBlueRandomizer randomizer;
 	private String inputFilePath;
 	private String inputFileDirectory;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup = new ButtonGroup();	
 	
 	/**
 	 * Launch the application.
@@ -84,7 +85,7 @@ public class RandomizerUI {
 		frmRedblueRandomizer = new JFrame();
 		frmRedblueRandomizer.setTitle("Red/Blue Randomizer");
 		frmRedblueRandomizer.getContentPane().setEnabled(false);
-		frmRedblueRandomizer.setBounds(100, 100, 322, 430);
+		frmRedblueRandomizer.setBounds(100, 100, 322, 458);
 		frmRedblueRandomizer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -141,6 +142,9 @@ public class RandomizerUI {
 		trainerCheckBox = new JCheckBox("Trainer Pokemon");
 		panel.add(trainerCheckBox);
 		
+		gymLeaderCheckBox = new JCheckBox("Gym Leader Pokemon");
+		panel.add(gymLeaderCheckBox);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Randomization Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		frmRedblueRandomizer.getContentPane().add(panel_1);
@@ -171,6 +175,7 @@ public class RandomizerUI {
 						randomizer.setStartersToggle(rivalStarterCheckBox.isSelected());
 						randomizer.setwildAreasToggle(wildCheckBox.isSelected());
 						randomizer.setTrainersToggle(trainerCheckBox.isSelected());
+						randomizer.setGymLeadersToggle(gymLeaderCheckBox.isSelected());
 						randomizer.setOneToOneToggle(oneToOneReplacement.isSelected());
 						
 						//randomize and save

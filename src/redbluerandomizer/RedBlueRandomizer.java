@@ -43,12 +43,14 @@ public class RedBlueRandomizer {
 	private final int[] areaOffsets = {53472,53494,53516,53538,53560,53582,53604,53626,53648,53670,53692,53714,53736,53758,53780,53802,53824,53846,53868,53890,53912,53938,53960,53982,54004,54026,54048,54070,54092,54114,54136,54158,54180,54202,54224,54246,54270,54290,54312,54334,54356,54378,54400,54422,54444,54466,54488,54510,54530,54552,54574,54596,54618,54640,54662,54684,54706,};
 	private final int trainerPokemonStart = 0x39DCD;
 	private final int trainerPokemonEnd = 0x3A1E3;
+	private final int[] gymLeaders = {0x3A3B6,0x3A3BC,0x3A3C2,0x3A3CA,0x3A3D2,0x3A3DC,0x3A3E6,0x3A291};
 	
 	//options
 	private boolean introToggle = false;
 	private boolean startersToggle = false;
 	private boolean wildAreasToggle = false;
 	private boolean trainersToggle = false;
+	private boolean gymLeadersToggle = false;
 	private boolean oneToOneToggle = false;
 	
 	private byte[] rom;
@@ -108,8 +110,7 @@ public class RedBlueRandomizer {
 		if(wildAreasToggle){
 			for(int i=0; i<areaOffsets.length; i++){
 				for(int j = 0; j < 20; j+=2){
-					offset = areaOffsets[i];	
-					//rom[offset + j] = (byte)0x01;
+					offset = areaOffsets[i];
 					if(oneToOneToggle){
 						rom[offset + j + 1] = getReplacement(rom[offset + j + 1]);
 					}
@@ -121,7 +122,7 @@ public class RedBlueRandomizer {
 		}	
 		//trainer pokemon
 		if(trainersToggle){
-			for(int i=this.trainerPokemonStart; i<trainerPokemonEnd; i++){
+			for(int i=trainerPokemonStart; i<trainerPokemonEnd; i++){
 				if(rom[i] == 0x0){
 					i++;
 				}
@@ -134,6 +135,27 @@ public class RedBlueRandomizer {
 					}
 				}
 			}
+		}
+		//gym leaders pokemon
+		if(gymLeadersToggle){
+			boolean loop = true;
+			for(int i=0; i<gymLeaders.length; i++){
+				offset = gymLeaders[i];			
+				while(loop){
+					if(rom[offset] == 0x0){
+						break;
+					}
+					else{
+						if(oneToOneToggle){
+							rom[offset+1] = getReplacement(rom[offset+1]);
+						}
+						else{
+							rom[offset+1] = getRandomPokemonIndex();
+						}
+						offset += 2;
+					}
+				}				
+			}		
 		}
 	}
 	
@@ -150,6 +172,10 @@ public class RedBlueRandomizer {
 		return pokemonNames.get(pokemonIndexes.indexOf(pokemonIndex));
 	}
 	
+	public String getPokemonName(byte pokemonIndex){
+		return getPokemonName(byteToInt(pokemonIndex));
+	}
+	
 	public HashMap<Integer, Integer> getOneToOneMap(){
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		List<Integer> temp = getPokemonIndexes();
@@ -164,8 +190,7 @@ public class RedBlueRandomizer {
 	
 	public byte getReplacement(byte oldIndex){
 		return (byte)swapMap.get(byteToInt(oldIndex)).intValue();
-	}
-	
+	}	
 	
 	public void readRom(String filePath){
 		try {
@@ -213,6 +238,9 @@ public class RedBlueRandomizer {
 	}
 	public void setTrainersToggle(boolean toggle){
 		this.trainersToggle = toggle;
+	}	
+	public void setGymLeadersToggle(boolean toggle){
+		this.gymLeadersToggle = toggle;
 	}
 	public void setOneToOneToggle(boolean toggle){
 		this.oneToOneToggle = toggle;
