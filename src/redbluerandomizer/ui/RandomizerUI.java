@@ -39,8 +39,8 @@ public class RandomizerUI {
 
 	private JFrame frmRedblueRandomizer;
 	
-	private JCheckBox introCheckBox;	
-	private JCheckBox rivalStarterCheckBox;	
+	private JCheckBox titleScreenCheckBox;	
+	private JCheckBox rivalCheckBox;	
 	private JCheckBox wildCheckBox;	
 	private JCheckBox trainerCheckBox;
 	private JCheckBox gymLeaderCheckBox;
@@ -53,6 +53,7 @@ public class RandomizerUI {
 	private String inputFilePath;
 	private String inputFileDirectory;
 	private final ButtonGroup buttonGroup = new ButtonGroup();	
+	private JCheckBox starterCheckBox;
 	
 	/**
 	 * Launch the application.
@@ -85,7 +86,7 @@ public class RandomizerUI {
 		frmRedblueRandomizer = new JFrame();
 		frmRedblueRandomizer.setTitle("Red/Blue Randomizer");
 		frmRedblueRandomizer.getContentPane().setEnabled(false);
-		frmRedblueRandomizer.setBounds(100, 100, 322, 458);
+		frmRedblueRandomizer.setBounds(100, 100, 322, 550);
 		frmRedblueRandomizer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -130,11 +131,14 @@ public class RandomizerUI {
 		frmRedblueRandomizer.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		introCheckBox = new JCheckBox("Title Screen Pokemon");
-		panel.add(introCheckBox);
+		titleScreenCheckBox = new JCheckBox("Title Screen Pokemon");
+		panel.add(titleScreenCheckBox);
 		
-		rivalStarterCheckBox = new JCheckBox("Rival Starter Pokemon");
-		panel.add(rivalStarterCheckBox);
+		starterCheckBox = new JCheckBox("Starter Pokemon");
+		panel.add(starterCheckBox);
+		
+		rivalCheckBox = new JCheckBox("Rival Starter Pokemon");
+		panel.add(rivalCheckBox);
 		
 		wildCheckBox = new JCheckBox("Wild Pokemon");
 		panel.add(wildCheckBox);
@@ -171,8 +175,9 @@ public class RandomizerUI {
 					File outputFile = chooser.getSelectedFile();
 					if(outputFile != null){
 						//set options
-						randomizer.setIntroToggle(introCheckBox.isSelected());
-						randomizer.setStartersToggle(rivalStarterCheckBox.isSelected());
+						randomizer.setTitleScreenToggle(titleScreenCheckBox.isSelected());
+						randomizer.setPlayerStartersToggle(starterCheckBox.isSelected());
+						randomizer.setRivalToggle(rivalCheckBox.isSelected());
 						randomizer.setwildAreasToggle(wildCheckBox.isSelected());
 						randomizer.setTrainersToggle(trainerCheckBox.isSelected());
 						randomizer.setGymLeadersToggle(gymLeaderCheckBox.isSelected());
