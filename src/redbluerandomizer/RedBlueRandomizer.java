@@ -29,7 +29,6 @@ public class RedBlueRandomizer {
 	private ArrayList<Integer> pokemonIndexes;
 	Map<Integer, Integer> swapMap;
 	private Random rand = new MersenneTwister(new Date().getTime());
-	//private Random rand = new Random(new Date().getTime());
 	
 	//constants
 	private final String redRomName = "POKEMON RED";
@@ -37,20 +36,50 @@ public class RedBlueRandomizer {
 	
 	//offsets
 	private final int romNameStart = 0x134;
-	private final int romNameEnd = 0x144;
-	private final int[] introPokemon = {0x4399,0x4588,0x4589,0x458A,0x458B,0x458C,0x458D,0x458E,0x458F,0x4590,0x4591,0x4592,0x4593,0x4594,0x4595,0x4596,0x4597};
-	private final int[] startersOffsets = {0x3A1E5,0x3A1E8,0x3A1EB};	
+	private final int romNameEnd = 0x144;	
+	private final int[] playerStarters = {0x1D10E, 0x1D11F, 0x1D130};
+	private final int[] titleScreenPokemon = {0x4399,0x4588,0x4589,0x458A,0x458B,0x458C,0x458D,0x458E,0x458F,0x4590,0x4591,0x4592,0x4593,0x4594,0x4595,0x4596,0x4597};	
 	private final int[] areaOffsets = {53472,53494,53516,53538,53560,53582,53604,53626,53648,53670,53692,53714,53736,53758,53780,53802,53824,53846,53868,53890,53912,53938,53960,53982,54004,54026,54048,54070,54092,54114,54136,54158,54180,54202,54224,54246,54270,54290,54312,54334,54356,54378,54400,54422,54444,54466,54488,54510,54530,54552,54574,54596,54618,54640,54662,54684,54706,};
 	private final int trainerPokemonStart = 0x39DCD;
 	private final int trainerPokemonEnd = 0x3A1E3;
 	private final int[] gymLeaders = {0x3A3B6,0x3A3BC,0x3A3C2,0x3A3CA,0x3A3D2,0x3A3DC,0x3A3E6,0x3A291};
+	private final int[] rivalStarters = {0x3A1E5,0x3A1E8,0x3A1EB};
+	private final int[][]rivalPokemon = {
+											//player chose bulbasaur
+									        {0x3a1fd, 0x3a21b, 0x3a41d, 0x3a441, 0x3a465, 0x3a48f, 0x3a4b9}, //charmander, charmeleon, charizard
+									        {0x3a1fb, 0x3a215, 0x3a417, 0x3a439, 0x3a45d, 0x3a485, 0x3a4af}, //pidgey, pidgeotto, pidgeot
+									        {0x3a217, 0x3a41b, 0x3a43f, 0x3a463, 0x3a48d, 0x3a4b1},			 //abra, kadabra, alakazam
+									        {0x3a219, 0x3a419},												 //rattata, raticate
+									        {0x3a43b, 0x3a45f, 0x3a489, 0x3a4b5},							 //exeggucute, exeggcutor
+									        {0x3a43d, 0x3a461, 0x3a48b, 0x3a4b7},							 //gyrados
+									        {0x3a487, 0x3a4b3},												 //ryhorn, rhydon
+									        
+									        //player chose charmander
+									        {0x3a1f1, 0x3a207, 0x3a409, 0x3a429, 0x3a44d, 0x3a473, 0x3a49d}, //squirtle, wartortle, blastoise
+									        {0x3a1ef, 0x3a201, 0x3a403, 0x3a421, 0x3a445, 0x3a469, 0x3a493}, //pidgey, pidgeotto, pidgeot
+									        {0x3a203, 0x3a407, 0x3a427, 0x3a44b, 0x3a471, 0x3a495},			 //abra, kadabra, alakazam
+									        {0x3a205, 0x3a405},												 //rattata, raticate
+									        {0x3a423, 0x3a447, 0x3a46d, 0x3a499},							 //growlithe, arcanine
+									        {0x3a425, 0x3a449, 0x3a46f, 0x3a49b},							 //exeggucute, exeggcutor
+									        {0x3a46b, 0x3a497},												 //ryhorn, rhydon
+									        
+									        //player chose squirtle
+									        {0x3a1f7, 0x3a211, 0x3a413, 0x3a435, 0x3a459, 0x3a481, 0x3a4ab}, //bulbasaur, ivysaur, venusaur
+									        {0x3a1f5, 0x3a20b, 0x3a40d, 0x3a42d, 0x3a451, 0x3a477, 0x3a4a1}, //pidgey, pidgeotto, pidgeot
+									        {0x3a20d, 0x3a411, 0x3a433, 0x3a457, 0x3a47f, 0x3a4a3},			 //abra, kadabra, alakazam
+									        {0x3a20f, 0x3a40f},												 //rattata, raticate
+									        {0x3a42f, 0x3a453, 0x3a47b, 0x3a4a7},							 //gyrados
+									        {0x3a431, 0x3a455, 0x3a47d, 0x3a4a9},							 //growlithe, arcanine
+									        {0x3a479, 0x3a4a5}												 //ryhorn, rhydon
+									    };
 	
 	//options
-	private boolean introToggle = false;
-	private boolean startersToggle = false;
+	private boolean titleScreenToggle = false;
+	private boolean playerStartersToggle = false;
 	private boolean wildAreasToggle = false;
 	private boolean trainersToggle = false;
 	private boolean gymLeadersToggle = false;
+	private boolean rivalToggle = false;
 	private boolean oneToOneToggle = false;
 	
 	private byte[] rom;
@@ -82,30 +111,29 @@ public class RedBlueRandomizer {
 		swapMap = getOneToOneMap();
 		int offset;
 		//intro pokemon
-		if(introToggle){
-			for(int i=0; i<introPokemon.length; i++){
-				offset = introPokemon[i];
-				if(oneToOneToggle){
-					rom[offset] = getReplacement(rom[offset]);
-				}
-				else{
-					rom[offset] = getRandomPokemonIndex();
-				}
-				
-			}			
-		}		
-		//starters
-		if(startersToggle){
-			for(int i=0; i<startersOffsets.length; i++){
-				offset = startersOffsets[i];
+		if(titleScreenToggle){
+			for(int i=0; i<titleScreenPokemon.length; i++){
+				offset = titleScreenPokemon[i];
 				if(oneToOneToggle){
 					rom[offset] = getReplacement(rom[offset]);
 				}
 				else{
 					rom[offset] = getRandomPokemonIndex();
 				}				
+			}			
+		}
+		//player starters
+		if(playerStartersToggle){
+			for(int i=0; i<playerStarters.length; i++){
+				offset = playerStarters[i];
+				if(oneToOneToggle){					
+					rom[offset] = getReplacement(rom[offset]);
+				}
+				else{
+					rom[offset] = getRandomPokemonIndex();
+				}
 			}
-		}	
+		}		
 		//wild pokemon areas
 		if(wildAreasToggle){
 			for(int i=0; i<areaOffsets.length; i++){
@@ -156,16 +184,51 @@ public class RedBlueRandomizer {
 					}
 				}				
 			}		
+		}		
+		//rival pokemon
+		if(rivalToggle){
+			//starters
+			for(int i=0; i<rivalStarters.length; i++){
+				offset = rivalStarters[i];
+				if(oneToOneToggle){
+					rom[offset] = getReplacement(rom[offset]);
+				}
+				else{
+					rom[offset] = getRandomPokemonIndex();
+				}				
+			}
+			//later battles			
+			for(int i = 0; i<rivalPokemon.length; i++){
+				int[] arr = rivalPokemon[i];				
+				for(int j = 0; j< arr.length; j++){
+					offset = arr[j];
+					if(oneToOneToggle){
+						rom[offset] = getReplacement(rom[offset]);
+					}
+					else{
+						rom[offset] = getRandomPokemonIndex();
+					}
+				}
+			}			
 		}
 	}
 	
 	public byte getRandomLevel(){
+		shuffle();
 		return (byte)(rand.nextInt(100)+1);
 	}
 	
 	public byte getRandomPokemonIndex(){
+		shuffle();
 		int randomIndex = rand.nextInt(pokemonIndexes.size());
 		return (byte)pokemonIndexes.get(randomIndex).intValue();
+	}	
+	
+	public void shuffle(){
+		int loop = rand.nextInt(10);		
+		for(int i=0; i<loop; i++){
+			rand.nextInt(pokemonIndexes.size());
+		}
 	}
 	
 	public String getPokemonName(int pokemonIndex){
@@ -227,11 +290,12 @@ public class RedBlueRandomizer {
 		return b & 0xFF;
 	}
 	
-	public void setIntroToggle(boolean toggle){
-		this.introToggle = toggle;
+	//toggle setters
+	public void setTitleScreenToggle(boolean toggle){
+		this.titleScreenToggle = toggle;
 	}
-	public void setStartersToggle(boolean toggle){
-		this.startersToggle = toggle;
+	public void setPlayerStartersToggle(boolean toggle){
+		this.playerStartersToggle = toggle;
 	}
 	public void setwildAreasToggle(boolean toggle){
 		this.wildAreasToggle = toggle;
@@ -241,6 +305,9 @@ public class RedBlueRandomizer {
 	}	
 	public void setGymLeadersToggle(boolean toggle){
 		this.gymLeadersToggle = toggle;
+	}
+	public void setRivalToggle(boolean toggle){
+		this.rivalToggle = toggle;
 	}
 	public void setOneToOneToggle(boolean toggle){
 		this.oneToOneToggle = toggle;
