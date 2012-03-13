@@ -27,8 +27,10 @@ public class RedBlueRandomizer {
 		
 	private ArrayList<String> pokemonNames;
 	private ArrayList<Integer> pokemonIndexes;
-	Map<Integer, Integer> swapMap;
+	private Map<Integer, Integer> swapMap;
+	private ArrayList<Integer> legendaries;
 	private Random rand = new MersenneTwister(new Date().getTime());
+	private byte[] rom;
 	
 	//constants
 	private final String redRomName = "POKEMON RED";
@@ -43,6 +45,7 @@ public class RedBlueRandomizer {
 	private final int trainerPokemonStart = 0x39DCD;
 	private final int trainerPokemonEnd = 0x3A1E3;
 	private final int[] gymLeaders = {0x3A3B6,0x3A3BC,0x3A3C2,0x3A3CA,0x3A3D2,0x3A3DC,0x3A3E6,0x3A291};
+	private final int[] eliteFour = {0x3a4bc, 0x3a3aa, 0x3a517, 0x3a523};
 	private final int[] rivalStarters = {0x3A1E5,0x3A1E8,0x3A1EB};
 	private final int[][]rivalPokemon = {
 											//player chose bulbasaur
@@ -79,17 +82,19 @@ public class RedBlueRandomizer {
 	private boolean wildAreasToggle = false;
 	private boolean trainersToggle = false;
 	private boolean gymLeadersToggle = false;
+	private boolean eliteFourToggle = false;
 	private boolean rivalToggle = false;
 	private boolean oneToOneToggle = false;
-	
-	private byte[] rom;
+	private boolean noLegendariesToggle = false;
 	
 	public RedBlueRandomizer(){
 		pokemonNames = getPokemonNames();
 		pokemonIndexes = getPokemonIndexes();
 		swapMap = getOneToOneMap();
+		legendaries = getLegendaries();
 	}
 	
+	//checks the ROM's name
 	public boolean isPokemonRedBlue(){
 		try{
 			String romName = "";
@@ -107,6 +112,7 @@ public class RedBlueRandomizer {
 		}
 	}
 	
+	//performs the randomization (duh...)
 	public void randomize(){	
 		swapMap = getOneToOneMap();
 		int offset;
@@ -184,6 +190,27 @@ public class RedBlueRandomizer {
 					}
 				}				
 			}		
+		}
+		//elite four pokemon
+		if(eliteFourToggle){
+			boolean loop = true;
+			for(int i=0; i<eliteFour.length; i++){
+				offset = eliteFour[i];
+				while(loop){
+					if(rom[offset] == 0x0){
+						break;
+					}
+					else{
+						if(oneToOneToggle){
+							rom[offset+1] = getReplacement(rom[offset+1]);
+						}
+						else{
+							rom[offset+1] = getRandomPokemonIndex();
+						}
+						offset += 2;
+					}
+				}				
+			}		
 		}		
 		//rival pokemon
 		if(rivalToggle){
@@ -213,17 +240,33 @@ public class RedBlueRandomizer {
 		}
 	}
 	
+	//returns a random level between 1-100
 	public byte getRandomLevel(){
 		shuffle();
 		return (byte)(rand.nextInt(100)+1);
 	}
 	
+	//returns a random pokemon index
 	public byte getRandomPokemonIndex(){
-		shuffle();
-		int randomIndex = rand.nextInt(pokemonIndexes.size());
-		return (byte)pokemonIndexes.get(randomIndex).intValue();
+		shuffle();		
+		if(noLegendariesToggle){
+			int randomIndex;
+			int randomPokemon;
+			while(true){
+				randomIndex = rand.nextInt(pokemonIndexes.size());
+				randomPokemon = pokemonIndexes.get(randomIndex).intValue();
+				if(!legendaries.contains(randomPokemon)){
+					return (byte)randomPokemon;
+				}
+			}		
+		}
+		else{
+			int randomIndex = rand.nextInt(pokemonIndexes.size());		
+			return (byte)pokemonIndexes.get(randomIndex).intValue();
+		}	
 	}	
 	
+	//progresses the RNG a random number of times to add to the randomness
 	public void shuffle(){
 		int loop = rand.nextInt(10);		
 		for(int i=0; i<loop; i++){
@@ -231,14 +274,17 @@ public class RedBlueRandomizer {
 		}
 	}
 	
+	//returns a pokemon's name based on its index
 	public String getPokemonName(int pokemonIndex){
 		return pokemonNames.get(pokemonIndexes.indexOf(pokemonIndex));
 	}
 	
+	//returns a pokemon's name based on its index
 	public String getPokemonName(byte pokemonIndex){
 		return getPokemonName(byteToInt(pokemonIndex));
 	}
 	
+	//creates a one-to-one randomization of the pokemon list
 	public HashMap<Integer, Integer> getOneToOneMap(){
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		List<Integer> temp = getPokemonIndexes();
@@ -251,10 +297,12 @@ public class RedBlueRandomizer {
 		return map;
 	}
 	
+	//gets the replacement for a pokemon using the swap map generated	
 	public byte getReplacement(byte oldIndex){
 		return (byte)swapMap.get(byteToInt(oldIndex)).intValue();
 	}	
 	
+	//reads in the ROM given a filepath
 	public void readRom(String filePath){
 		try {
 			FileInputStream stream = new FileInputStream(filePath);
@@ -268,6 +316,7 @@ public class RedBlueRandomizer {
 		}			
 	}
 	
+	//saves the ROM to a specified filepath
 	public void saveRom(String filePath) {
 		try {
 	    	FileOutputStream stream = new FileOutputStream(new File(filePath));
@@ -279,6 +328,7 @@ public class RedBlueRandomizer {
 	    }
 	}
 	
+	//closes a stream without fear of an exception thrown	
 	public void closeStream(InputStream stream){
 		try{
 			stream.close();			
@@ -286,6 +336,7 @@ public class RedBlueRandomizer {
 		catch(Exception e){}
 	}
 	
+	//converts a byte to an int
 	private int byteToInt(byte b){
 		return b & 0xFF;
 	}
@@ -306,13 +357,31 @@ public class RedBlueRandomizer {
 	public void setGymLeadersToggle(boolean toggle){
 		this.gymLeadersToggle = toggle;
 	}
+	public void setEliteFourToggle(boolean toggle){
+		this.eliteFourToggle = toggle;
+	}	
 	public void setRivalToggle(boolean toggle){
 		this.rivalToggle = toggle;
 	}
 	public void setOneToOneToggle(boolean toggle){
 		this.oneToOneToggle = toggle;
 	}
+	public void setNoLegendariesToggle(boolean toggle){
+		this.noLegendariesToggle = toggle;
+	}
 	
+	//returns a list of the legendary pokemon's indexes
+	private ArrayList<Integer> getLegendaries(){
+		ArrayList<Integer> theLegendaries = new ArrayList<Integer>();
+		theLegendaries.add(0x49);
+		theLegendaries.add(0x4A);
+		theLegendaries.add(0x4B);
+		theLegendaries.add(0x83);
+		theLegendaries.add(0x15);
+		return theLegendaries;
+	}
+	
+	//returns a list of all pokemon names
 	private ArrayList<String> getPokemonNames(){
 		ArrayList<String> names = new ArrayList<String>();
 		names.add("Rhydon");
@@ -469,6 +538,7 @@ public class RedBlueRandomizer {
 		return names;
 	}
 	
+	//returns a list of all the pokemon's indexes
 	private ArrayList<Integer> getPokemonIndexes(){
 		ArrayList<Integer> indexes = new ArrayList<Integer>();
 		indexes.add(0x1);
