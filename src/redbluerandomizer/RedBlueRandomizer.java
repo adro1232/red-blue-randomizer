@@ -41,11 +41,11 @@ public class RedBlueRandomizer {
 	private final int romNameEnd = 0x144;	
 	private final int[] playerStarters = {0x1D10E, 0x1D11F, 0x1D130};
 	private final int[] titleScreenPokemon = {0x4399,0x4588,0x4589,0x458A,0x458B,0x458C,0x458D,0x458E,0x458F,0x4590,0x4591,0x4592,0x4593,0x4594,0x4595,0x4596,0x4597};	
-	private final int[] areaOffsets = {53472,53494,53516,53538,53560,53582,53604,53626,53648,53670,53692,53714,53736,53758,53780,53802,53824,53846,53868,53890,53912,53938,53960,53982,54004,54026,54048,54070,54092,54114,54136,54158,54180,54202,54224,54246,54270,54290,54312,54334,54356,54378,54400,54422,54444,54466,54488,54510,54530,54552,54574,54596,54618,54640,54662,54684,54706,};
+	private final int[] areaOffsets = {0xD0E0,0xD0F6,0xD10C,0xD122,0xD138,0xD14E,0xD164,0xD17A,0xD190,0xD1A6,0xD1BC,0xD1D2,0xD1E8,0xD1FE,0xD214,0xD22A,0xD240,0xD256,0xD26C,0xD282,0xD298,0xD2B2,0xD2C8,0xD2DE,0xD2F4,0xD30A,0xD320,0xD336,0xD34C,0xD362,0xD378,0xD38E,0xD3A4,0xD3BA,0xD3D0,0xD3E6,0xD3FE,0xD412,0xD428,0xD43E,0xD454,0xD46A,0xD480,0xD496,0xD4AC,0xD4C2,0xD4D8,0xD4EE,0xD502,0xD518,0xD52E,0xD544,0xD55A,0xD570,0xD586,0xD59C,0xD5B2};
 	private final int trainerPokemonStart = 0x39DCD;
 	private final int trainerPokemonEnd = 0x3A1E3;
 	private final int[] gymLeaders = {0x3A3B6,0x3A3BC,0x3A3C2,0x3A3CA,0x3A3D2,0x3A3DC,0x3A3E6,0x3A291};
-	private final int[] eliteFour = {0x3a4bc, 0x3a3aa, 0x3a517, 0x3a523};
+	private final int[] eliteFour = {0x3A4BC, 0x3A3AA, 0x3A517, 0x3A523};
 	private final int[] rivalStarters = {0x3A1E5,0x3A1E8,0x3A1EB};
 	private final int[][]rivalPokemon = {
 											//player chose bulbasaur
@@ -87,11 +87,13 @@ public class RedBlueRandomizer {
 	private boolean oneToOneToggle = false;
 	private boolean noLegendariesToggle = false;
 	
-	public RedBlueRandomizer(){
-		pokemonNames = getPokemonNames();
-		pokemonIndexes = getPokemonIndexes();
-		swapMap = getOneToOneMap();
-		legendaries = getLegendaries();
+	//DEBUG
+	public void printAreaOffsets(){
+		System.out.print("int[] areaOffsets = {");
+		for(int i=0; i<areaOffsets.length;i++){
+			System.out.print("0x" + Integer.toHexString(areaOffsets[i]).toUpperCase() + ",");
+		}
+		System.out.println("};");		
 	}
 	
 	//checks the ROM's name
