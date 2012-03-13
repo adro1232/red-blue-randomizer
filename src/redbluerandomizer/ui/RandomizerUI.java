@@ -34,6 +34,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 import redbluerandomizer.RedBlueRandomizer;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class RandomizerUI {
 
@@ -47,6 +50,7 @@ public class RandomizerUI {
 	private JButton randomizeButton;
 	private JRadioButton totallyRandom;
 	private JRadioButton oneToOneReplacement;
+	private JCheckBox noLegendariesCheckBox;
 	
 	
 	private RedBlueRandomizer randomizer;
@@ -54,6 +58,7 @@ public class RandomizerUI {
 	private String inputFileDirectory;
 	private final ButtonGroup buttonGroup = new ButtonGroup();	
 	private JCheckBox starterCheckBox;
+	private JCheckBox chckbxEliteFourPokemon;
 	
 	/**
 	 * Launch the application.
@@ -84,9 +89,10 @@ public class RandomizerUI {
 	 */
 	private void initialize() {
 		frmRedblueRandomizer = new JFrame();
+		frmRedblueRandomizer.setResizable(false);
 		frmRedblueRandomizer.setTitle("Red/Blue Randomizer");
 		frmRedblueRandomizer.getContentPane().setEnabled(false);
-		frmRedblueRandomizer.setBounds(100, 100, 322, 550);
+		frmRedblueRandomizer.setBounds(100, 100, 362, 484);
 		frmRedblueRandomizer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -123,41 +129,41 @@ public class RandomizerUI {
 			}
 		});
 		mnFile.add(menuItem);
-		frmRedblueRandomizer.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel panel = new JPanel();
 		panel.setToolTipText("T\n");
 		panel.setBorder(new TitledBorder(null, "Randomize", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		frmRedblueRandomizer.getContentPane().add(panel);
-		panel.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		titleScreenCheckBox = new JCheckBox("Title Screen Pokemon");
-		panel.add(titleScreenCheckBox);
-		
-		starterCheckBox = new JCheckBox("Starter Pokemon");
-		panel.add(starterCheckBox);
-		
-		rivalCheckBox = new JCheckBox("Rival Starter Pokemon");
-		panel.add(rivalCheckBox);
-		
-		wildCheckBox = new JCheckBox("Wild Pokemon");
-		panel.add(wildCheckBox);
+		panel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		trainerCheckBox = new JCheckBox("Trainer Pokemon");
 		panel.add(trainerCheckBox);
 		
+		titleScreenCheckBox = new JCheckBox("Title Screen Pokemon");
+		panel.add(titleScreenCheckBox);
+		
+		rivalCheckBox = new JCheckBox("Rival Pokemon");
+		panel.add(rivalCheckBox);
+		
+		starterCheckBox = new JCheckBox("Starter Pokemon");
+		panel.add(starterCheckBox);
+		
 		gymLeaderCheckBox = new JCheckBox("Gym Leader Pokemon");
 		panel.add(gymLeaderCheckBox);
 		
+		wildCheckBox = new JCheckBox("Wild Pokemon");
+		panel.add(wildCheckBox);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Randomization Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		frmRedblueRandomizer.getContentPane().add(panel_1);
-		panel_1.setLayout(new GridLayout(0, 1, 0, 0));
+		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		totallyRandom = new JRadioButton("Totally Random");
 		totallyRandom.setSelected(true);
 		panel_1.add(totallyRandom);
 		buttonGroup.add(totallyRandom);
+		
+		noLegendariesCheckBox = new JCheckBox("No Legendaries");
+		panel_1.add(noLegendariesCheckBox);
 		
 		oneToOneReplacement = new JRadioButton("1-1 Replacement");
 		panel_1.add(oneToOneReplacement);
@@ -182,6 +188,7 @@ public class RandomizerUI {
 						randomizer.setTrainersToggle(trainerCheckBox.isSelected());
 						randomizer.setGymLeadersToggle(gymLeaderCheckBox.isSelected());
 						randomizer.setOneToOneToggle(oneToOneReplacement.isSelected());
+						randomizer.setNoLegendariesToggle(noLegendariesCheckBox.isSelected());
 						
 						//randomize and save
 						randomizer.randomize();
@@ -201,6 +208,31 @@ public class RandomizerUI {
 				}
 			}
 		});
-		frmRedblueRandomizer.getContentPane().add(randomizeButton);		
+		GroupLayout groupLayout = new GroupLayout(frmRedblueRandomizer.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(randomizeButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(623, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addGap(8)
+					.addComponent(randomizeButton, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		
+		chckbxEliteFourPokemon = new JCheckBox("Elite Four Pokemon");
+		panel.add(chckbxEliteFourPokemon);
+		frmRedblueRandomizer.getContentPane().setLayout(groupLayout);
 	}
 }
