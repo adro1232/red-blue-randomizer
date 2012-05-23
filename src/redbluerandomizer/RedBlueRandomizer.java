@@ -51,12 +51,21 @@ public class RedBlueRandomizer {
 	
 	
 	//Regular Trainers start: 0x39DCD
-	//Regular Trainers end: 0x3A1E3
-	//Special Trainers start: 0x3A1EC (rival first)
-	//Special Trainers end: 
+	//Regular Trainers end: 0x3A1E2
 	
-	//private final int trainerPokemonStart = 0x3A1EC;	
-	//private final int trainerPokemonEnd = 0x3a52d;
+	//Regular Rival Starters start: 0x3A1E3
+	//Regular Rival Starters end: 0x3A1EC
+	
+	//Special Trainers start: 0x3A1EC (rival first)
+	//Special Trainers end: 0x3A235
+	
+	//?? Regular Trainers start: 0x3A236
+	//?? Regular Trainers end: 
+	
+	//TODO
+	private final int testStart = 0x39DCD;
+	private final int testEnd = 0x3A52D;
+	
 	private final int[] gymLeaders = {0x3A3B6,0x3A3BC,0x3A3C2,0x3A3CA,0x3A3D2,0x3A3E6,0x3A3DC,0x3A291};
 	private final int[] eliteFour = {0x3A4BC, 0x3A3AA, 0x3A517, 0x3A523};
 	private final int[] rivalStarters = {0x3A1E5,0x3A1E8,0x3A1EB};
@@ -407,8 +416,7 @@ public class RedBlueRandomizer {
 			}
 		}
 		
-		//trainer pokemon
-		
+		//trainer pokemon		
 		System.out.println("\nTrainer Pokemon **************************************\n");
 		int count = 1;
 		boolean skip = false;
@@ -423,7 +431,7 @@ public class RedBlueRandomizer {
 				printPokemon(i, rom[i]);
 			}
 		}
-		//*/
+		//*/	
 		
 		//trainer pokemon
 		/*
@@ -502,9 +510,69 @@ public class RedBlueRandomizer {
 				offset = arr[j];
 				printPokemon(offset, rom[offset-1], rom[offset]);
 			}
-		}			
-		
+		}	
 	}	
+	
+	//TODO
+	public void testPrint(){
+		//setup
+		pokemonNames = this.getPokemonNames();
+		pokemonIndexes = this.getPokemonIndexes();	
+		swapMap = getOneToOneMap();
+		
+		//trainer pokemon		
+		System.out.println("\nCURRENT TEST **************************************\n");
+		int i = testStart;
+		do{
+			System.out.println("\nOffset:" + intToHexStr(i));
+			if(byteToInt(rom[i]) == 0x0 && byteToInt(rom[i+1]) != 0xFF){
+				i = printRegularTrainer(i);
+			}
+			else{
+				i = printSpecialTrainer(i);
+			}		
+		}		
+		while(i < testEnd);			
+	}
+		
+	//prints a regular trainer
+	public int printRegularTrainer(int offset){	
+		offset++;
+		System.out.println("Level: " + this.byteToInt(rom[offset]));
+		offset++;
+		boolean loop = true;
+		while(loop){		
+			if(rom[offset] == 0x0){
+				loop = false;
+				break;									
+			}
+			else{
+				printPokemon(offset, rom[offset]);
+				offset++;
+			}
+		}
+		return offset;
+	}
+	
+	//prints a regular trainer
+	public int printSpecialTrainer(int offset){	
+		offset += 2;
+		boolean loop = true;
+		while(loop){		
+			if(rom[offset] == 0x0){
+				loop = false;
+				break;									
+			}
+			else{
+				printPokemon(offset+1, byteToInt(rom[offset]), rom[offset+1]);
+				offset+=2;
+			}
+		}
+		return offset;
+	}
+	
+	
+	//prints a special trainer
 	
 	//toggle setters
 	public void setTitleScreenToggle(boolean toggle){
