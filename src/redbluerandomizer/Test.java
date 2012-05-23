@@ -13,8 +13,8 @@ public class Test {
 	 * @param args
 	 */
 	
-	public static String inputFile = "/home/trey/Documents/pokemon/blue.gb";
-	public static String outputFile = "/home/trey/Documents/pokemon/blue_random.gb";
+	public static String inputFile = "C:\\Trey\\Workspaces\\Randomizer\\ROMS\\blue.gb";
+	public static String outputFile = "\\Trey\\Workspaces\\Randomizer\\ROMS\\blue_random.gb";
 	
 	/**
 	 * @param args
@@ -22,7 +22,7 @@ public class Test {
 	public static void main(String[] args) {
 		RedBlueRandomizer br = new RedBlueRandomizer();		
 		br.readRom(inputFile);	
-		br.printROM();
+		br.testPrint();
 		
 		//br.randomize();
 		//br.saveRom(outputFile);
