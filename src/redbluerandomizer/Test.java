@@ -13,14 +13,19 @@ public class Test {
 	 * @param args
 	 */
 	
-	public static String inputFile = "";
-	public static String outputFile = "";
+	public static String inputFile = "/home/trey/Documents/pokemon/blue.gb";
+	public static String outputFile = "/home/trey/Documents/pokemon/blue_random.gb";
 	
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		RedBlueRandomizer br = new RedBlueRandomizer();		
 		br.readRom(inputFile);	
-		br.randomize();
-		br.saveRom(outputFile);
+		br.printROM();
+		
+		//br.randomize();
+		//br.saveRom(outputFile);
 	}
 	
 	public static void generateSet(RedBlueRandomizer br, int total){

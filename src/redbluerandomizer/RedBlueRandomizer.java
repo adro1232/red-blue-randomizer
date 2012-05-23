@@ -36,45 +36,58 @@ public class RedBlueRandomizer {
 	private final String redRomName = "POKEMON RED";
 	private final String blueRomName =  "POKEMON BLUE";
 	
+	//lookups
+	private final String[] gymLeaderNames = {"Brock", "Misty", "Lt. Surge", "Erika", "Koga", "Sabrina", "Blaine", "Giovanni"};
+	private final String[] elite4Names = {"Lorelei", "Bruno", "Agatha", "Lance"};
+	
 	//offsets
 	private final int romNameStart = 0x134;
 	private final int romNameEnd = 0x144;	
 	private final int[] playerStarters = {0x1D10E, 0x1D11F, 0x1D130};
 	private final int[] titleScreenPokemon = {0x4399,0x4588,0x4589,0x458A,0x458B,0x458C,0x458D,0x458E,0x458F,0x4590,0x4591,0x4592,0x4593,0x4594,0x4595,0x4596,0x4597};	
 	private final int[] areaOffsets = {0xD0E0,0xD0F6,0xD10C,0xD122,0xD138,0xD14E,0xD164,0xD17A,0xD190,0xD1A6,0xD1BC,0xD1D2,0xD1E8,0xD1FE,0xD214,0xD22A,0xD240,0xD256,0xD26C,0xD282,0xD298,0xD2B2,0xD2C8,0xD2DE,0xD2F4,0xD30A,0xD320,0xD336,0xD34C,0xD362,0xD378,0xD38E,0xD3A4,0xD3BA,0xD3D0,0xD3E6,0xD3FE,0xD412,0xD428,0xD43E,0xD454,0xD46A,0xD480,0xD496,0xD4AC,0xD4C2,0xD4D8,0xD4EE,0xD502,0xD518,0xD52E,0xD544,0xD55A,0xD570,0xD586,0xD59C,0xD5B2};
-	private final int trainerPokemonStart = 0x39DCD;
+	private final int trainerPokemonStart = 0x39DCD; 
 	private final int trainerPokemonEnd = 0x3A1E3;
-	private final int[] gymLeaders = {0x3A3B6,0x3A3BC,0x3A3C2,0x3A3CA,0x3A3D2,0x3A3DC,0x3A3E6,0x3A291};
+	
+	
+	//Regular Trainers start: 0x39DCD
+	//Regular Trainers end: 0x3A1E3
+	//Special Trainers start: 0x3A1EC (rival first)
+	//Special Trainers end: 
+	
+	//private final int trainerPokemonStart = 0x3A1EC;	
+	//private final int trainerPokemonEnd = 0x3a52d;
+	private final int[] gymLeaders = {0x3A3B6,0x3A3BC,0x3A3C2,0x3A3CA,0x3A3D2,0x3A3E6,0x3A3DC,0x3A291};
 	private final int[] eliteFour = {0x3A4BC, 0x3A3AA, 0x3A517, 0x3A523};
 	private final int[] rivalStarters = {0x3A1E5,0x3A1E8,0x3A1EB};
 	private final int[][]rivalPokemon = {
 											//player chose bulbasaur
-									        {0x3a1fd, 0x3a21b, 0x3a41d, 0x3a441, 0x3a465, 0x3a48f, 0x3a4b9}, //charmander, charmeleon, charizard
-									        {0x3a1fb, 0x3a215, 0x3a417, 0x3a439, 0x3a45d, 0x3a485, 0x3a4af}, //pidgey, pidgeotto, pidgeot
-									        {0x3a217, 0x3a41b, 0x3a43f, 0x3a463, 0x3a48d, 0x3a4b1},			 //abra, kadabra, alakazam
-									        {0x3a219, 0x3a419},												 //rattata, raticate
-									        {0x3a43b, 0x3a45f, 0x3a489, 0x3a4b5},							 //exeggucute, exeggcutor
-									        {0x3a43d, 0x3a461, 0x3a48b, 0x3a4b7},							 //gyrados
-									        {0x3a487, 0x3a4b3},												 //ryhorn, rhydon
+											{0x3a1fb, 0x3a1fd}, 									//pidgey, charmander
+											{0x3a215, 0x3a217, 0x3a219, 0x3a21b}, 					//pidgeotto, abra, rattata, charmander
+											{0x3a417, 0x3a419, 0x3a41b, 0x3a41d},					//pidgeotto, ratticate, kadabra, charmeleon
+											{0x3a439, 0x3a43b, 0x3a43d, 0x3a43f, 0x3a441},			//pidgeotto, exeggucute, gyrados, kadabra, charmeleon
+											{0x3a45d, 0x3a45f, 0x3a461, 0x3a463, 0x3a465}, 			//pidgeot, exeggucute, gyrados, alakazam, charizard
+											{0x3a485, 0x3a487, 0x3a489, 0x3a48b, 0x3a48d, 0x3a48f}, //pidgeot, ryhorn, exeggucute, gyrados, alakazam, charizard
+											{0x3a4af, 0x3a4b1, 0x3a4b3, 0x3a4b5, 0x3a4b7, 0x3a4b9}, //pidgeot, alakazam, rhydon, exeggcutor, gyrados, charizard
 									        
 									        //player chose charmander
-									        {0x3a1f1, 0x3a207, 0x3a409, 0x3a429, 0x3a44d, 0x3a473, 0x3a49d}, //squirtle, wartortle, blastoise
-									        {0x3a1ef, 0x3a201, 0x3a403, 0x3a421, 0x3a445, 0x3a469, 0x3a493}, //pidgey, pidgeotto, pidgeot
-									        {0x3a203, 0x3a407, 0x3a427, 0x3a44b, 0x3a471, 0x3a495},			 //abra, kadabra, alakazam
-									        {0x3a205, 0x3a405},												 //rattata, raticate
-									        {0x3a423, 0x3a447, 0x3a46d, 0x3a499},							 //growlithe, arcanine
-									        {0x3a425, 0x3a449, 0x3a46f, 0x3a49b},							 //exeggucute, exeggcutor
-									        {0x3a46b, 0x3a497},												 //ryhorn, rhydon
+											{0x3a1ef, 0x3a1f1}, 									//Pidgey, Squirtle
+											{0x3a201, 0x3a203, 0x3a205, 0x3a207}, 					//Pidgeotto, Abra, Rattata, Squirtle
+											{0x3a403, 0x3a405, 0x3a407, 0x3a409},					//Pidgeotto, Raticate, Kadabra, Wartortle
+											{0x3a421, 0x3a423, 0x3a425, 0x3a427, 0x3a429},			//Pidgeotto, Growlithe, Exeggcute, Kadabra, Wartortle
+											{0x3a445, 0x3a447, 0x3a449, 0x3a44b, 0x3a44d},			//Pidgeot, Growlithe, Exeggcute, Alakazam, Blastoise
+											{0x3a469, 0x3a46b, 0x3a46d, 0x3a46f, 0x3a471, 0x3a473}, //Pidgeot, Rhyhorn, Growlithe, Exeggcute, Alakazam, Blastoise
+											{0x3a493, 0x3a495, 0x3a497, 0x3a499, 0x3a49b, 0x3a49d}, //Pidgeot, Alakazam, Rhydon, Arcanine, Exeggutor, Blastoise
 									        
 									        //player chose squirtle
-									        {0x3a1f7, 0x3a211, 0x3a413, 0x3a435, 0x3a459, 0x3a481, 0x3a4ab}, //bulbasaur, ivysaur, venusaur
-									        {0x3a1f5, 0x3a20b, 0x3a40d, 0x3a42d, 0x3a451, 0x3a477, 0x3a4a1}, //pidgey, pidgeotto, pidgeot
-									        {0x3a20d, 0x3a411, 0x3a433, 0x3a457, 0x3a47f, 0x3a4a3},			 //abra, kadabra, alakazam
-									        {0x3a20f, 0x3a40f},												 //rattata, raticate
-									        {0x3a42f, 0x3a453, 0x3a47b, 0x3a4a7},							 //gyrados
-									        {0x3a431, 0x3a455, 0x3a47d, 0x3a4a9},							 //growlithe, arcanine
-									        {0x3a479, 0x3a4a5}												 //ryhorn, rhydon
-									    };
+											{0x3a1f5, 0x3a1f7},										//Pidgey, Bulbasaur
+											{0x3a20b, 0x3a20d, 0x3a20f, 0x3a211},					//Pidgeotto, Abra, Rattata, Bulbasaur
+											{0x3a40d, 0x3a40f, 0x3a411, 0x3a413},					//Pidgeotto, Raticate, Kadabra, Ivysaur 
+											{0x3a42d, 0x3a42f, 0x3a431, 0x3a433, 0x3a435},			//Pidgeotto, Gyarados, Growlithe, Kadabra, Ivysaur
+											{0x3a451, 0x3a453, 0x3a455, 0x3a457, 0x3a459},			//Pidgeot, Gyarados, Growlithe, Alakazam, Venusaur
+											{0x3a477, 0x3a479, 0x3a47b, 0x3a47d, 0x3a47f, 0x3a481},	//Pidgeot, Rhyhorn, Gyarados, Growlithe, Alakazam, Venusaur
+											{0x3a4a1, 0x3a4a3, 0x3a4a5, 0x3a4a7, 0x3a4a9, 0x3a4ab}	//Pidgeot, Alakazam, Rhydon, Gyarados, Arcanine, Venusaur
+									    };		
 	
 	//options
 	private boolean titleScreenToggle = false;
@@ -85,16 +98,7 @@ public class RedBlueRandomizer {
 	private boolean eliteFourToggle = false;
 	private boolean rivalToggle = false;
 	private boolean oneToOneToggle = false;
-	private boolean noLegendariesToggle = false;
-	
-	//DEBUG
-	public void printAreaOffsets(){
-		System.out.print("int[] areaOffsets = {");
-		for(int i=0; i<areaOffsets.length;i++){
-			System.out.print("0x" + Integer.toHexString(areaOffsets[i]).toUpperCase() + ",");
-		}
-		System.out.println("};");		
-	}
+	private boolean noLegendariesToggle = false;	
 	
 	//checks the ROM's name
 	public boolean isPokemonRedBlue(){
@@ -115,8 +119,12 @@ public class RedBlueRandomizer {
 	}
 	
 	//performs the randomization (duh...)
-	public void randomize(){	
+	public void randomize(){
+		//setup
+		pokemonNames = this.getPokemonNames();
+		pokemonIndexes = this.getPokemonIndexes();	
 		swapMap = getOneToOneMap();
+		
 		int offset;
 		//intro pokemon
 		if(titleScreenToggle){
@@ -127,7 +135,7 @@ public class RedBlueRandomizer {
 				}
 				else{
 					rom[offset] = getRandomPokemonIndex();
-				}				
+				}
 			}			
 		}
 		//player starters
@@ -144,7 +152,7 @@ public class RedBlueRandomizer {
 		}		
 		//wild pokemon areas
 		if(wildAreasToggle){
-			for(int i=0; i<areaOffsets.length; i++){
+			for(int i=0; i<areaOffsets.length; i++){				
 				for(int j = 0; j < 20; j+=2){
 					offset = areaOffsets[i];
 					if(oneToOneToggle){
@@ -300,7 +308,7 @@ public class RedBlueRandomizer {
 	}
 	
 	//gets the replacement for a pokemon using the swap map generated	
-	public byte getReplacement(byte oldIndex){
+	public byte getReplacement(byte oldIndex){		
 		return (byte)swapMap.get(byteToInt(oldIndex)).intValue();
 	}	
 	
@@ -343,6 +351,161 @@ public class RedBlueRandomizer {
 		return b & 0xFF;
 	}
 	
+	//converts int to a hex string
+	private String intToHexStr(int i){
+		return "0x" + Integer.toHexString(i).toUpperCase();
+	}
+	
+	private void printPokemon(int offset, int level, byte pokemonIndex){
+		String output = intToHexStr(offset) + "\t";
+		if(("Level " + level).length() == 7){
+			output += ("Level " + level + "    ");
+		}
+		else{
+			output += ("Level " + level) + "   ";
+		}
+		output += this.getPokemonName(pokemonIndex);
+		System.out.println(output);
+	}
+	
+	private void printPokemon(int offset, byte pokemonIndex){
+		String output = intToHexStr(offset) + "\t";
+		output += this.getPokemonName(pokemonIndex);
+		System.out.println(output);
+	}
+	
+	//prtints contents of the ROM
+	public void printROM(){
+		//setup
+		pokemonNames = this.getPokemonNames();
+		pokemonIndexes = this.getPokemonIndexes();	
+		swapMap = getOneToOneMap();
+		boolean loop = false;
+		
+		int offset;
+		//intro pokemon		
+		System.out.println("\nTitle Screen Pokemon**********************************\n");
+		for(int i=0; i<titleScreenPokemon.length; i++){
+			offset = titleScreenPokemon[i];
+			printPokemon(offset, rom[offset]);
+		}			
+		
+		//player starters
+		System.out.println("\nPlayer Starter ***************************************\n");
+		for(int i=0; i<playerStarters.length; i++){
+			offset = playerStarters[i];
+			printPokemon(offset, rom[offset]);			
+		}
+				
+		//wild pokemon areas
+		System.out.println("\nWild Pokemon Areas ***********************************");
+		for(int i=0; i<areaOffsets.length; i++){
+			System.out.println("\nWild Pokemon Area " + i + "\t" + intToHexStr(areaOffsets[i]) + "\n");			
+			for(int j = 0; j < 20; j+=2){
+				offset = areaOffsets[i];
+				printPokemon((offset+j+1), rom[offset + j], rom[offset + j + 1]);
+			}
+		}
+		
+		//trainer pokemon
+		
+		System.out.println("\nTrainer Pokemon **************************************\n");
+		int count = 1;
+		boolean skip = false;
+		for(int i=trainerPokemonStart; i<trainerPokemonEnd; i++){
+			if(rom[i] == 0x0){
+				i++;				
+				System.out.println("\nTrainer #" + count + "\t" + intToHexStr(i) + "\n");
+				System.out.println("Level: " + rom[i]);
+				count++;							
+			}
+			else{
+				printPokemon(i, rom[i]);
+			}
+		}
+		//*/
+		
+		//trainer pokemon
+		/*
+		System.out.println("\nTrainer Pokemon **************************************\n");
+		int count = 1;
+		for(int i=trainerPokemonStart; i<trainerPokemonEnd; i+=2){
+			if(rom[i] == 0x0){			
+				System.out.println("\nTrainer #" + count + "\t" + intToHexStr(i) + "\n");
+				count++;							
+			}
+			else{
+				printPokemon(i, rom[i], rom[i+1]);
+			}
+		}
+		//*/
+		
+		//gym leaders pokemon
+		System.out.println("\nGym Leaders ******************************************");
+		loop = true;
+		for(int i=0; i<gymLeaders.length; i++){
+			offset = gymLeaders[i];		
+			System.out.println("\n" + gymLeaderNames[i] + "\t" + intToHexStr(offset) + "\n");
+			while(loop){
+				if(rom[offset] == 0x0){
+					break;
+				}
+				else{
+					printPokemon(offset, rom[offset], rom[offset +1]);
+					offset += 2;
+				}
+			}				
+		}	
+		
+		//elite four pokemon
+		System.out.println("\nElite Four *******************************************");
+		loop = true;
+		for(int i=0; i<eliteFour.length; i++){
+			offset = eliteFour[i];
+			System.out.println("\n" + elite4Names[i] + "\t" + intToHexStr(offset) + "\n");
+			while(loop){
+				if(rom[offset] == 0x0){
+					break;
+				}
+				else{
+					printPokemon(offset, rom[offset], rom[offset +1]);
+					offset += 2;
+				}
+			}				
+		}
+						
+		//rival pokemon
+		System.out.println("\nRival ************************************************");		
+		
+		//rival starters
+		System.out.println("\nStarters\n");
+		for(int i=0; i<rivalStarters.length; i++){
+			offset = rivalStarters[i];
+			printPokemon(offset, rom[offset]);				
+		}
+		//rival later battles
+		for(int i = 0; i<rivalPokemon.length; i++){
+			switch(i){
+				case 0: System.out.println("\nPlayer chose bulbasaur:");
+						break;
+				case 7: System.out.println("\nPlayer chose charmander:");
+						break;
+				case 14: System.out.println("\nPlayer chose squirtle:");
+						 break;
+			
+			}
+			int[] arr = rivalPokemon[i];				
+			for(int j = 0; j< arr.length; j++){
+				if(j == 0){
+					System.out.println();
+				}
+				offset = arr[j];
+				printPokemon(offset, rom[offset-1], rom[offset]);
+			}
+		}			
+		
+	}	
+	
 	//toggle setters
 	public void setTitleScreenToggle(boolean toggle){
 		this.titleScreenToggle = toggle;
@@ -370,6 +533,12 @@ public class RedBlueRandomizer {
 	}
 	public void setNoLegendariesToggle(boolean toggle){
 		this.noLegendariesToggle = toggle;
+	}	
+	
+	private void removeLegendaries(ArrayList<Integer> pokemon){
+		for(Integer i: getLegendaries()){
+			pokemon.remove(i);
+		}
 	}
 	
 	//returns a list of the legendary pokemon's indexes
