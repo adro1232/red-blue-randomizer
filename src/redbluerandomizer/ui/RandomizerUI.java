@@ -194,6 +194,7 @@ public class RandomizerUI {
 				}
 				catch(Exception e){
 					JOptionPane.showMessageDialog(null, "An error occurred during randomization. Please check your rom and try again.");
+					e.printStackTrace();
 				}
 			}
 		});

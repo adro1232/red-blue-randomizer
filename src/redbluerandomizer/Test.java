@@ -20,16 +20,25 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		RedBlueRandomizer br = new RedBlueRandomizer();		
-		br.readRom(inputFile);		
+		RedBlueRandomizer br = new RedBlueRandomizer();
+		
+		/*
+		br.setNoLegendariesToggle(true);
+		br.setOneToOneToggle(true);
+		br.swapMapTest();
+		//*/		
+		
+		br.readRom(inputFile);
+		br.setNoLegendariesToggle(true);
+		br.setOneToOneToggle(true);	
+		br.setTrainersToggle(true);
 		br.printROM();
-		System.out.println("###############################################################################################################################################################");
 		br.randomize();
 		br.printROM();
 		
 		//br.randomize();
-		//br.saveRom(outputFile);
-	}
+		br.saveRom(outputFile);
+	}	
 	
 	public static void generateSet(RedBlueRandomizer br, int total){
 		ArrayList<String> pokemon = new ArrayList<String>();
