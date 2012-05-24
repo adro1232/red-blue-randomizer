@@ -46,8 +46,8 @@ public class RedBlueRandomizer {
 	private final int[] playerStarters = {0x1D10E, 0x1D11F, 0x1D130};
 	private final int[] titleScreenPokemon = {0x4399,0x4588,0x4589,0x458A,0x458B,0x458C,0x458D,0x458E,0x458F,0x4590,0x4591,0x4592,0x4593,0x4594,0x4595,0x4596,0x4597};	
 	private final int[] areaOffsets = {0xD0E0,0xD0F6,0xD10C,0xD122,0xD138,0xD14E,0xD164,0xD17A,0xD190,0xD1A6,0xD1BC,0xD1D2,0xD1E8,0xD1FE,0xD214,0xD22A,0xD240,0xD256,0xD26C,0xD282,0xD298,0xD2B2,0xD2C8,0xD2DE,0xD2F4,0xD30A,0xD320,0xD336,0xD34C,0xD362,0xD378,0xD38E,0xD3A4,0xD3BA,0xD3D0,0xD3E6,0xD3FE,0xD412,0xD428,0xD43E,0xD454,0xD46A,0xD480,0xD496,0xD4AC,0xD4C2,0xD4D8,0xD4EE,0xD502,0xD518,0xD52E,0xD544,0xD55A,0xD570,0xD586,0xD59C,0xD5B2};
-	private final int trainerPokemonStart = 0x39DCD; 
-	private final int trainerPokemonEnd = 0x3A1E3;
+	private final int trainerPokemonStart = 0x39DCD;
+	private final int trainerPokemonEnd = 0x3A52D;
 	
 	
 	//Regular Trainers start: 0x39DCD
@@ -61,10 +61,6 @@ public class RedBlueRandomizer {
 	
 	//?? Regular Trainers start: 0x3A236
 	//?? Regular Trainers end: 
-	
-	//TODO
-	private final int testStart = 0x39DCD;
-	private final int testEnd = 0x3A52D;
 	
 	private final int[] gymLeaders = {0x3A3B6,0x3A3BC,0x3A3C2,0x3A3CA,0x3A3D2,0x3A3E6,0x3A3DC,0x3A291};
 	private final int[] eliteFour = {0x3A4BC, 0x3A3AA, 0x3A517, 0x3A523};
@@ -172,91 +168,64 @@ public class RedBlueRandomizer {
 					}
 				}
 			}			
-		}	
-		//trainer pokemon
+		}
+		
+		//pokemon trainers
 		if(trainersToggle){
-			for(int i=trainerPokemonStart; i<trainerPokemonEnd; i++){
-				if(rom[i] == 0x0){
-					i++;
+			int i = trainerPokemonStart;
+			while(i < trainerPokemonEnd){
+				if(byteToInt(rom[i]) == 0x0 && byteToInt(rom[i+1]) != 0xFF){
+					i = randomizeRegularTrainer(i);
 				}
 				else{
-					if(oneToOneToggle){
-						rom[i] = getReplacement(rom[i]);
-					}
-					else{
-						rom[i] = getRandomPokemonIndex();
-					}
-				}
+					i = randomizeSpecialTrainer(i);
+				}			
+			}			
+		}			
+	}
+	
+	//randomizes a regular trainer
+	public int randomizeRegularTrainer(int offset){
+		offset+=2;
+		boolean loop = true;
+		while(loop){		
+			if(rom[offset] == 0x0){
+				loop = false;
+				break;									
 			}
-		}
-		//gym leaders pokemon
-		if(gymLeadersToggle){
-			boolean loop = true;
-			for(int i=0; i<gymLeaders.length; i++){
-				offset = gymLeaders[i];			
-				while(loop){
-					if(rom[offset] == 0x0){
-						break;
-					}
-					else{
-						if(oneToOneToggle){
-							rom[offset+1] = getReplacement(rom[offset+1]);
-						}
-						else{
-							rom[offset+1] = getRandomPokemonIndex();
-						}
-						offset += 2;
-					}
-				}				
-			}		
-		}
-		//elite four pokemon
-		if(eliteFourToggle){
-			boolean loop = true;
-			for(int i=0; i<eliteFour.length; i++){
-				offset = eliteFour[i];
-				while(loop){
-					if(rom[offset] == 0x0){
-						break;
-					}
-					else{
-						if(oneToOneToggle){
-							rom[offset+1] = getReplacement(rom[offset+1]);
-						}
-						else{
-							rom[offset+1] = getRandomPokemonIndex();
-						}
-						offset += 2;
-					}
-				}				
-			}		
-		}		
-		//rival pokemon
-		if(rivalToggle){
-			//starters
-			for(int i=0; i<rivalStarters.length; i++){
-				offset = rivalStarters[i];
+			else{
 				if(oneToOneToggle){
 					rom[offset] = getReplacement(rom[offset]);
 				}
 				else{
 					rom[offset] = getRandomPokemonIndex();
-				}				
-			}
-			//later battles			
-			for(int i = 0; i<rivalPokemon.length; i++){
-				int[] arr = rivalPokemon[i];				
-				for(int j = 0; j< arr.length; j++){
-					offset = arr[j];
-					if(oneToOneToggle){
-						rom[offset] = getReplacement(rom[offset]);
-					}
-					else{
-						rom[offset] = getRandomPokemonIndex();
-					}
 				}
-			}			
+				offset++;
+			}
 		}
+		return offset;
+	}
+	
+	//randomizer a special trainer
+	public int randomizeSpecialTrainer(int offset){	
+		offset += 2;
+		boolean loop = true;
+		while(loop){		
+			if(rom[offset] == 0x0){
+				loop = false;
+				break;									
+			}
+			else{
+				if(oneToOneToggle){
+					rom[offset + 1] = getReplacement(rom[offset]);
+				}
+				else{
+					rom[offset + 1] = getRandomPokemonIndex();
+				}
+				offset+=2;
+			}
+		}
+		return offset;
 	}
 	
 	//returns a random level between 1-100
@@ -389,7 +358,6 @@ public class RedBlueRandomizer {
 		pokemonNames = this.getPokemonNames();
 		pokemonIndexes = this.getPokemonIndexes();	
 		swapMap = getOneToOneMap();
-		boolean loop = false;
 		
 		int offset;
 		//intro pokemon		
@@ -417,124 +385,19 @@ public class RedBlueRandomizer {
 		}
 		
 		//trainer pokemon		
-		System.out.println("\nTrainer Pokemon **************************************\n");
-		int count = 1;
-		boolean skip = false;
-		for(int i=trainerPokemonStart; i<trainerPokemonEnd; i++){
-			if(rom[i] == 0x0){
-				i++;				
-				System.out.println("\nTrainer #" + count + "\t" + intToHexStr(i) + "\n");
-				System.out.println("Level: " + rom[i]);
-				count++;							
+		System.out.println("\nTraner Pokemon **************************************\n");
+		int a = trainerPokemonStart;
+		while(a < trainerPokemonEnd){
+			System.out.println("\nOffset:" + intToHexStr(a));
+			if(byteToInt(rom[a]) == 0x0 && byteToInt(rom[a+1]) != 0xFF){
+				a = printRegularTrainer(a);
 			}
 			else{
-				printPokemon(i, rom[i]);
-			}
-		}
-		//*/	
-		
-		//trainer pokemon
-		/*
-		System.out.println("\nTrainer Pokemon **************************************\n");
-		int count = 1;
-		for(int i=trainerPokemonStart; i<trainerPokemonEnd; i+=2){
-			if(rom[i] == 0x0){			
-				System.out.println("\nTrainer #" + count + "\t" + intToHexStr(i) + "\n");
-				count++;							
-			}
-			else{
-				printPokemon(i, rom[i], rom[i+1]);
-			}
-		}
-		//*/
-		
-		//gym leaders pokemon
-		System.out.println("\nGym Leaders ******************************************");
-		loop = true;
-		for(int i=0; i<gymLeaders.length; i++){
-			offset = gymLeaders[i];		
-			System.out.println("\n" + gymLeaderNames[i] + "\t" + intToHexStr(offset) + "\n");
-			while(loop){
-				if(rom[offset] == 0x0){
-					break;
-				}
-				else{
-					printPokemon(offset, rom[offset], rom[offset +1]);
-					offset += 2;
-				}
-			}				
-		}	
-		
-		//elite four pokemon
-		System.out.println("\nElite Four *******************************************");
-		loop = true;
-		for(int i=0; i<eliteFour.length; i++){
-			offset = eliteFour[i];
-			System.out.println("\n" + elite4Names[i] + "\t" + intToHexStr(offset) + "\n");
-			while(loop){
-				if(rom[offset] == 0x0){
-					break;
-				}
-				else{
-					printPokemon(offset, rom[offset], rom[offset +1]);
-					offset += 2;
-				}
-			}				
-		}
-						
-		//rival pokemon
-		System.out.println("\nRival ************************************************");		
-		
-		//rival starters
-		System.out.println("\nStarters\n");
-		for(int i=0; i<rivalStarters.length; i++){
-			offset = rivalStarters[i];
-			printPokemon(offset, rom[offset]);				
-		}
-		//rival later battles
-		for(int i = 0; i<rivalPokemon.length; i++){
-			switch(i){
-				case 0: System.out.println("\nPlayer chose bulbasaur:");
-						break;
-				case 7: System.out.println("\nPlayer chose charmander:");
-						break;
-				case 14: System.out.println("\nPlayer chose squirtle:");
-						 break;
-			
-			}
-			int[] arr = rivalPokemon[i];				
-			for(int j = 0; j< arr.length; j++){
-				if(j == 0){
-					System.out.println();
-				}
-				offset = arr[j];
-				printPokemon(offset, rom[offset-1], rom[offset]);
+				a = printSpecialTrainer(a);
 			}
 		}	
 	}	
 	
-	//TODO
-	public void testPrint(){
-		//setup
-		pokemonNames = this.getPokemonNames();
-		pokemonIndexes = this.getPokemonIndexes();	
-		swapMap = getOneToOneMap();
-		
-		//trainer pokemon		
-		System.out.println("\nCURRENT TEST **************************************\n");
-		int i = testStart;
-		do{
-			System.out.println("\nOffset:" + intToHexStr(i));
-			if(byteToInt(rom[i]) == 0x0 && byteToInt(rom[i+1]) != 0xFF){
-				i = printRegularTrainer(i);
-			}
-			else{
-				i = printSpecialTrainer(i);
-			}		
-		}		
-		while(i < testEnd);			
-	}
-		
 	//prints a regular trainer
 	public int printRegularTrainer(int offset){	
 		offset++;
@@ -554,7 +417,7 @@ public class RedBlueRandomizer {
 		return offset;
 	}
 	
-	//prints a regular trainer
+	//prints a special trainer
 	public int printSpecialTrainer(int offset){	
 		offset += 2;
 		boolean loop = true;
@@ -570,9 +433,6 @@ public class RedBlueRandomizer {
 		}
 		return offset;
 	}
-	
-	
-	//prints a special trainer
 	
 	//toggle setters
 	public void setTitleScreenToggle(boolean toggle){
