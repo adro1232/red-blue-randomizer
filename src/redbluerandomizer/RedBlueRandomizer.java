@@ -123,12 +123,25 @@ public class RedBlueRandomizer {
 		}
 	}
 	
+	public void swapMapTest(){
+		//setup
+		pokemonNames = getPokemonNames();
+		pokemonIndexes = getPokemonIndexes();
+		legendaries = getLegendaries();
+		swapMap = getOneToOneMap();	
+		
+		for(Integer originalIndex: pokemonIndexes){
+			System.out.println("Original:" + originalIndex + "\t\tNew:" + swapMap.get(originalIndex));
+		}
+	}
+	
 	//performs the randomization (duh...)
 	public void randomize(){
 		//setup
-		pokemonNames = this.getPokemonNames();
-		pokemonIndexes = this.getPokemonIndexes();	
-		swapMap = getOneToOneMap();
+		pokemonNames = getPokemonNames();
+		pokemonIndexes = getPokemonIndexes();
+		legendaries = getLegendaries();
+		swapMap = getOneToOneMap();	
 		
 		int offset;
 		//intro pokemon
@@ -168,8 +181,7 @@ public class RedBlueRandomizer {
 					}
 				}
 			}			
-		}
-		
+		}		
 		//pokemon trainers
 		if(trainersToggle){
 			int i = trainerPokemonStart;
@@ -217,7 +229,7 @@ public class RedBlueRandomizer {
 			}
 			else{
 				if(oneToOneToggle){
-					rom[offset + 1] = getReplacement(rom[offset]);
+					rom[offset + 1] = getReplacement(rom[offset + 1]);
 				}
 				else{
 					rom[offset + 1] = getRandomPokemonIndex();
@@ -276,6 +288,14 @@ public class RedBlueRandomizer {
 	public HashMap<Integer, Integer> getOneToOneMap(){
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		List<Integer> temp = getPokemonIndexes();
+		legendaries = getLegendaries();
+		if(noLegendariesToggle){
+			for(Integer legendaryIndex: legendaries){
+				int i = temp.indexOf(legendaryIndex);				
+				temp.set(i, byteToInt(getRandomPokemonIndex()));				
+			}
+		}
+		
 		Integer newIndex;
 		for(Integer oldIndex: pokemonIndexes){
 			newIndex = temp.get(rand.nextInt(temp.size()));
@@ -286,7 +306,7 @@ public class RedBlueRandomizer {
 	}
 	
 	//gets the replacement for a pokemon using the swap map generated	
-	public byte getReplacement(byte oldIndex){		
+	public byte getReplacement(byte oldIndex){
 		return (byte)swapMap.get(byteToInt(oldIndex)).intValue();
 	}	
 	
@@ -461,12 +481,6 @@ public class RedBlueRandomizer {
 	}
 	public void setNoLegendariesToggle(boolean toggle){
 		this.noLegendariesToggle = toggle;
-	}	
-	
-	private void removeLegendaries(ArrayList<Integer> pokemon){
-		for(Integer i: getLegendaries()){
-			pokemon.remove(i);
-		}
 	}
 	
 	//returns a list of the legendary pokemon's indexes
