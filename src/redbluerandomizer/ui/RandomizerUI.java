@@ -43,10 +43,8 @@ public class RandomizerUI {
 	private JFrame frmRedblueRandomizer;
 	
 	private JCheckBox titleScreenCheckBox;	
-	private JCheckBox rivalCheckBox;	
 	private JCheckBox wildCheckBox;	
 	private JCheckBox trainerCheckBox;
-	private JCheckBox gymLeaderCheckBox;
 	private JButton randomizeButton;
 	private JRadioButton totallyRandom;
 	private JRadioButton oneToOneReplacement;
@@ -58,7 +56,6 @@ public class RandomizerUI {
 	private String inputFileDirectory;
 	private final ButtonGroup buttonGroup = new ButtonGroup();	
 	private JCheckBox starterCheckBox;
-	private JCheckBox chckbxEliteFourPokemon;
 	
 	/**
 	 * Launch the application.
@@ -135,23 +132,17 @@ public class RandomizerUI {
 		panel.setBorder(new TitledBorder(null, "Randomize", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		trainerCheckBox = new JCheckBox("Trainer Pokemon");
-		panel.add(trainerCheckBox);
-		
 		titleScreenCheckBox = new JCheckBox("Title Screen Pokemon");
 		panel.add(titleScreenCheckBox);
 		
-		rivalCheckBox = new JCheckBox("Rival Pokemon");
-		panel.add(rivalCheckBox);
+		wildCheckBox = new JCheckBox("Wild Pokemon");
+		panel.add(wildCheckBox);
+		
+		trainerCheckBox = new JCheckBox("Trainer Pokemon");
+		panel.add(trainerCheckBox);
 		
 		starterCheckBox = new JCheckBox("Starter Pokemon");
 		panel.add(starterCheckBox);
-		
-		gymLeaderCheckBox = new JCheckBox("Gym Leader Pokemon");
-		panel.add(gymLeaderCheckBox);
-		
-		wildCheckBox = new JCheckBox("Wild Pokemon");
-		panel.add(wildCheckBox);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Randomization Options", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -183,10 +174,8 @@ public class RandomizerUI {
 						//set options
 						randomizer.setTitleScreenToggle(titleScreenCheckBox.isSelected());
 						randomizer.setPlayerStartersToggle(starterCheckBox.isSelected());
-						randomizer.setRivalToggle(rivalCheckBox.isSelected());
 						randomizer.setwildAreasToggle(wildCheckBox.isSelected());
 						randomizer.setTrainersToggle(trainerCheckBox.isSelected());
-						randomizer.setGymLeadersToggle(gymLeaderCheckBox.isSelected());
 						randomizer.setOneToOneToggle(oneToOneReplacement.isSelected());
 						randomizer.setNoLegendariesToggle(noLegendariesCheckBox.isSelected());
 						
@@ -230,9 +219,6 @@ public class RandomizerUI {
 					.addComponent(randomizeButton, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
-		
-		chckbxEliteFourPokemon = new JCheckBox("Elite Four Pokemon");
-		panel.add(chckbxEliteFourPokemon);
 		frmRedblueRandomizer.getContentPane().setLayout(groupLayout);
 	}
 }
