@@ -22,22 +22,22 @@ public class Test {
 	public static void main(String[] args) {
 		RedBlueRandomizer br = new RedBlueRandomizer();
 		
+		inputFile = "/home/trey/Documents/pokemon/Pokemon Red Rand.gb";
+		
 		/*
 		br.setNoLegendariesToggle(true);
 		br.setOneToOneToggle(true);
 		br.swapMapTest();
-		//*/		
+		//*/
 		
+
 		br.readRom(inputFile);
-		br.setNoLegendariesToggle(true);
-		br.setOneToOneToggle(true);	
-		br.setTrainersToggle(true);
+		br.setwildAreasToggle(true);
 		br.printROM();
 		br.randomize();
-		br.printROM();
 		
 		//br.randomize();
-		br.saveRom(outputFile);
+		//br.saveRom(outputFile);
 	}	
 	
 	public static void generateSet(RedBlueRandomizer br, int total){
