@@ -13,30 +13,20 @@ public class Test {
 	 * @param args
 	 */
 	
-	public static String inputFile = "/home/trey/Documents/pokemon/blue.gb";
-	public static String outputFile = "/home/trey/Documents/pokemon/blue_random.gb";
+	public static String inputFile = "";
+	public static String outputFile = "";
 	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		RedBlueRandomizer br = new RedBlueRandomizer();
-		
-		inputFile = "/home/trey/Documents/pokemon/Pokemon Red Rand.gb";
-		
-		/*
-		br.setNoLegendariesToggle(true);
-		br.setOneToOneToggle(true);
-		br.swapMapTest();
-		//*/
-		
-
+				
 		br.readRom(inputFile);
 		br.setwildAreasToggle(true);
 		br.printROM();
-		br.randomize();
-		
 		//br.randomize();
+		//br.printROM();
 		//br.saveRom(outputFile);
 	}	
 	
