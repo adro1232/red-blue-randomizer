@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2D87322915DEBB21000F9A91 /* missingno.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D87322815DEBB21000F9A91 /* missingno.png */; };
+		2D87322F15DF0E65000F9A91 /* missingno.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2D87322E15DF0E65000F9A91 /* missingno.icns */; };
+		2DE2ACFC15DD65D00018AA0D /* RedBlueRandomizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE2ACFB15DD65D00018AA0D /* RedBlueRandomizer.m */; };
+		2DEC345315DC31A3005260A5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DEC345215DC31A3005260A5 /* Cocoa.framework */; };
+		2DEC345D15DC31A3005260A5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DEC345B15DC31A3005260A5 /* InfoPlist.strings */; };
+		2DEC345F15DC31A3005260A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEC345E15DC31A3005260A5 /* main.m */; };
+		2DEC346315DC31A3005260A5 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2DEC346115DC31A3005260A5 /* Credits.rtf */; };
+		2DEC346615DC31A3005260A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEC346515DC31A3005260A5 /* AppDelegate.m */; };
+		2DEC346915DC31A3005260A5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DEC346715DC31A3005260A5 /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2D87322815DEBB21000F9A91 /* missingno.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = missingno.png; sourceTree = "<group>"; };
+		2D87322E15DF0E65000F9A91 /* missingno.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = missingno.icns; sourceTree = "<group>"; };
+		2DE2ACFA15DD65D00018AA0D /* RedBlueRandomizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBlueRandomizer.h; sourceTree = "<group>"; };
+		2DE2ACFB15DD65D00018AA0D /* RedBlueRandomizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedBlueRandomizer.m; sourceTree = "<group>"; };
+		2DEC344E15DC31A3005260A5 /* RedBlueRandomizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedBlueRandomizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DEC345215DC31A3005260A5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		2DEC345515DC31A3005260A5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		2DEC345615DC31A3005260A5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		2DEC345715DC31A3005260A5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2DEC345A15DC31A3005260A5 /* RedBlueRandomizer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RedBlueRandomizer-Info.plist"; sourceTree = "<group>"; };
+		2DEC345C15DC31A3005260A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2DEC345E15DC31A3005260A5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2DEC346015DC31A3005260A5 /* RedBlueRandomizer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RedBlueRandomizer-Prefix.pch"; sourceTree = "<group>"; };
+		2DEC346215DC31A3005260A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		2DEC346415DC31A3005260A5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2DEC346515DC31A3005260A5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2DEC346815DC31A3005260A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2DEC344B15DC31A3005260A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DEC345315DC31A3005260A5 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2D87322715DEBACC000F9A91 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				2D87322815DEBB21000F9A91 /* missingno.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		2DEC344315DC31A3005260A5 = {
+			isa = PBXGroup;
+			children = (
+				2D87322E15DF0E65000F9A91 /* missingno.icns */,
+				2D87322715DEBACC000F9A91 /* Images */,
+				2DEC345815DC31A3005260A5 /* RedBlueRandomizer */,
+				2DEC345115DC31A3005260A5 /* Frameworks */,
+				2DEC344F15DC31A3005260A5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2DEC344F15DC31A3005260A5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2DEC344E15DC31A3005260A5 /* RedBlueRandomizer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2DEC345115DC31A3005260A5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2DEC345215DC31A3005260A5 /* Cocoa.framework */,
+				2DEC345415DC31A3005260A5 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2DEC345415DC31A3005260A5 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2DEC345515DC31A3005260A5 /* AppKit.framework */,
+				2DEC345615DC31A3005260A5 /* CoreData.framework */,
+				2DEC345715DC31A3005260A5 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		2DEC345815DC31A3005260A5 /* RedBlueRandomizer */ = {
+			isa = PBXGroup;
+			children = (
+				2DEC346415DC31A3005260A5 /* AppDelegate.h */,
+				2DEC346515DC31A3005260A5 /* AppDelegate.m */,
+				2DEC346715DC31A3005260A5 /* MainMenu.xib */,
+				2DE2ACFA15DD65D00018AA0D /* RedBlueRandomizer.h */,
+				2DE2ACFB15DD65D00018AA0D /* RedBlueRandomizer.m */,
+				2DEC345915DC31A3005260A5 /* Supporting Files */,
+			);
+			path = RedBlueRandomizer;
+			sourceTree = "<group>";
+		};
+		2DEC345915DC31A3005260A5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2DEC345A15DC31A3005260A5 /* RedBlueRandomizer-Info.plist */,
+				2DEC345B15DC31A3005260A5 /* InfoPlist.strings */,
+				2DEC345E15DC31A3005260A5 /* main.m */,
+				2DEC346015DC31A3005260A5 /* RedBlueRandomizer-Prefix.pch */,
+				2DEC346115DC31A3005260A5 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2DEC344D15DC31A3005260A5 /* RedBlueRandomizer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2DEC346C15DC31A3005260A5 /* Build configuration list for PBXNativeTarget "RedBlueRandomizer" */;
+			buildPhases = (
+				2DEC344A15DC31A3005260A5 /* Sources */,
+				2DEC344B15DC31A3005260A5 /* Frameworks */,
+				2DEC344C15DC31A3005260A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RedBlueRandomizer;
+			productName = RedBlueRandomizer;
+			productReference = 2DEC344E15DC31A3005260A5 /* RedBlueRandomizer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2DEC344515DC31A3005260A5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 2DEC344815DC31A3005260A5 /* Build configuration list for PBXProject "RedBlueRandomizer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2DEC344315DC31A3005260A5;
+			productRefGroup = 2DEC344F15DC31A3005260A5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2DEC344D15DC31A3005260A5 /* RedBlueRandomizer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2DEC344C15DC31A3005260A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DEC345D15DC31A3005260A5 /* InfoPlist.strings in Resources */,
+				2DEC346315DC31A3005260A5 /* Credits.rtf in Resources */,
+				2DEC346915DC31A3005260A5 /* MainMenu.xib in Resources */,
+				2D87322915DEBB21000F9A91 /* missingno.png in Resources */,
+				2D87322F15DF0E65000F9A91 /* missingno.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2DEC344A15DC31A3005260A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DEC345F15DC31A3005260A5 /* main.m in Sources */,
+				2DEC346615DC31A3005260A5 /* AppDelegate.m in Sources */,
+				2DE2ACFC15DD65D00018AA0D /* RedBlueRandomizer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2DEC345B15DC31A3005260A5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2DEC345C15DC31A3005260A5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2DEC346115DC31A3005260A5 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2DEC346215DC31A3005260A5 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		2DEC346715DC31A3005260A5 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2DEC346815DC31A3005260A5 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2DEC346A15DC31A3005260A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2DEC346B15DC31A3005260A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2DEC346D15DC31A3005260A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					x86_64,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RedBlueRandomizer/RedBlueRandomizer-Prefix.pch";
+				INFOPLIST_FILE = "RedBlueRandomizer/RedBlueRandomizer-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		2DEC346E15DC31A3005260A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					x86_64,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RedBlueRandomizer/RedBlueRandomizer-Prefix.pch";
+				INFOPLIST_FILE = "RedBlueRandomizer/RedBlueRandomizer-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2DEC344815DC31A3005260A5 /* Build configuration list for PBXProject "RedBlueRandomizer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DEC346A15DC31A3005260A5 /* Debug */,
+				2DEC346B15DC31A3005260A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2DEC346C15DC31A3005260A5 /* Build configuration list for PBXNativeTarget "RedBlueRandomizer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DEC346D15DC31A3005260A5 /* Debug */,
+				2DEC346E15DC31A3005260A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2DEC344515DC31A3005260A5 /* Project object */;
+}
