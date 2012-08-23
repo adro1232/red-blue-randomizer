@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D269E2315E6B774007E75CB /* sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2D269E2215E6B774007E75CB /* sound.mp3 */; };
 		2D87322915DEBB21000F9A91 /* missingno.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D87322815DEBB21000F9A91 /* missingno.png */; };
 		2D87322F15DF0E65000F9A91 /* missingno.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2D87322E15DF0E65000F9A91 /* missingno.icns */; };
 		2DE2ACFC15DD65D00018AA0D /* RedBlueRandomizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE2ACFB15DD65D00018AA0D /* RedBlueRandomizer.m */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D269E2215E6B774007E75CB /* sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound.mp3; sourceTree = "<group>"; };
 		2D87322815DEBB21000F9A91 /* missingno.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = missingno.png; sourceTree = "<group>"; };
 		2D87322E15DF0E65000F9A91 /* missingno.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = missingno.icns; sourceTree = "<group>"; };
 		2DE2ACFA15DD65D00018AA0D /* RedBlueRandomizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedBlueRandomizer.h; sourceTree = "<group>"; };
@@ -50,6 +52,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D269E2515E6B77A007E75CB /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				2D269E2215E6B774007E75CB /* sound.mp3 */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
 		2D87322715DEBACC000F9A91 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +71,7 @@
 		2DEC344315DC31A3005260A5 = {
 			isa = PBXGroup;
 			children = (
+				2D269E2515E6B77A007E75CB /* Audio */,
 				2D87322E15DF0E65000F9A91 /* missingno.icns */,
 				2D87322715DEBACC000F9A91 /* Images */,
 				2DEC345815DC31A3005260A5 /* RedBlueRandomizer */,
@@ -176,6 +187,7 @@
 				2DEC346915DC31A3005260A5 /* MainMenu.xib in Resources */,
 				2D87322915DEBB21000F9A91 /* missingno.png in Resources */,
 				2D87322F15DF0E65000F9A91 /* missingno.icns in Resources */,
+				2D269E2315E6B774007E75CB /* sound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
