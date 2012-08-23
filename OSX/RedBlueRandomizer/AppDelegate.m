@@ -105,6 +105,10 @@
         NSURL *fileURL = [panel URL];
         [randomizer saveRomAtURL:fileURL];
         
+        //play sound
+        NSSound *player = [[NSSound alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"sound" ofType:@"mp3"] byReference:NO];
+        [player play];
+        
         //alert user of success
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setAlertStyle:NSWarningAlertStyle];

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "RedBlueRandomizer.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSAlertDelegate>
 
 @property RedBlueRandomizer *randomizer;
 
