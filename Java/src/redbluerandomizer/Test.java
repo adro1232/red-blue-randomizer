@@ -21,33 +21,14 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		RedBlueRandomizer br = new RedBlueRandomizer();
-				
 		br.readRom(inputFile);
+		br.setPlayerStartersToggle(true);
+		br.setTitleScreenToggle(true);
+		br.setTrainersToggle(true);
 		br.setwildAreasToggle(true);
-		br.printROM();
-		//br.randomize();
-		//br.printROM();
-		//br.saveRom(outputFile);
+		br.randomize();
+		
+		RomPrinter printer = new RomPrinter(br);
+		printer.printROM();
 	}	
-	
-	public static void generateSet(RedBlueRandomizer br, int total){
-		ArrayList<String> pokemon = new ArrayList<String>();
-		for(int i=0; i<total; i++){
-			pokemon.add(br.getPokemonName(br.getRandomPokemonIndex()));
-		}
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		for(int i=0; i<pokemon.size(); i++){
-			String key = pokemon.get(i);
-			if(map.containsKey(key)){
-				map.put(key, (map.get(key)+1));
-			}
-			else{
-				map.put(key, 1);
-			}
-		}
-		for(String key: map.keySet()){
-			System.out.println(map.get(key) + "\t\t" + key);
-		}
-	}
-
 }
